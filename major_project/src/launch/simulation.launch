@@ -1,0 +1,24 @@
+<launch>
+	<param name="use_sim_time" value="true"/>
+	<!--<node pkg="gmapping" type="slam_gmapping" name="mapping_node">
+		<param name="odom_frame" value="odom" />
+	</node>-->
+	<node pkg="major_project" type="major_project.py" name="majorProject" required="true" output="screen">
+	</node>
+	<include file="$(find turtlebot_gazebo)/launch/turtlebot_world.launch">
+		<arg name="world_file" value="$(find major_project)/worlds/majorworld.world"/>
+		<arg name="gui" value="true"/>
+	</include>
+	<include file="$(find turtlebot_gazebo)/launch/amcl_demo.launch">
+		<arg name="map_file" value="$(find major_project)/map/majorworldmap.yaml"/>
+		<arg name="initial_pose_x" value="0.0"/>
+		<arg name="initial_pose_y" value="0.0"/>
+		<arg name="initial_pose_a" value="0.0"/>
+	</include>
+	<!--<node pkg="turtlebot_teleop" type="turtlebot_teleop_key" name="turtlebot_teleop_keyboard">
+		<param name="scale_linear" value="1.0" type="double"/>
+		<param name="scale_angular" value="1.0" type="double"/>
+		<remap from="turtlebot_teleop_keyboard/cmd_vel" to="cmd_vel_mux/input/teleop"/>
+	</node>-->
+	<include file="$(find pocketsphinx)/launch/pocketsphinx.launch"/>
+</launch>
